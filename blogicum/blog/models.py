@@ -3,6 +3,8 @@ from django.db import models
 
 User = get_user_model()
 
+MAX_CHAR_LENGTH = 256
+
 
 class PublishedModel(models.Model):
     is_published = models.BooleanField(
@@ -16,7 +18,7 @@ class PublishedModel(models.Model):
 
 
 class Category(PublishedModel):
-    title = models.CharField('Заголовок', max_length=256)
+    title = models.CharField('Заголовок', max_length=MAX_CHAR_LENGTH)
     description = models.TextField('Описание')
     slug = models.SlugField(
         'Идентификатор', unique=True,
@@ -29,22 +31,24 @@ class Category(PublishedModel):
         verbose_name_plural = 'Категории'
 
     def __str__(self):
+        """Вернуть заголовок категории."""
         return self.title
 
 
 class Location(PublishedModel):
-    name = models.CharField('Название места', max_length=256)
+    name = models.CharField('Название места', max_length=MAX_CHAR_LENGTH)
 
     class Meta:
         verbose_name = 'местоположение'
         verbose_name_plural = 'Местоположения'
 
     def __str__(self):
+        """Вернуть название местоположения."""
         return self.name
 
 
 class Post(PublishedModel):
-    title = models.CharField('Заголовок', max_length=256)
+    title = models.CharField('Заголовок', max_length=MAX_CHAR_LENGTH)
     text = models.TextField('Текст')
     pub_date = models.DateTimeField(
         'Дата и время публикации',
@@ -70,4 +74,5 @@ class Post(PublishedModel):
         ordering = ('-pub_date',)
 
     def __str__(self):
+        """Вернуть заголовок публикации."""
         return self.title
